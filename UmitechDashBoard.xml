@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard CurrencyCulture="en-US">
+  <Title Text="Dashboard" />
+  <DataSources>
+    <SqlDataSource ComponentName="dashboardSqlDataSource1">
+      <Name>SQL Data Source 1</Name>
+      <Connection Name="localhost_dbAutoService_Connection" ProviderKey="MSSqlServer">
+        <Parameters>
+          <Parameter Name="server" Value="localhost" />
+          <Parameter Name="database" Value="dbAutoService" />
+          <Parameter Name="useIntegratedSecurity" Value="True" />
+          <Parameter Name="read only" Value="1" />
+          <Parameter Name="generateConnectionHelper" Value="false" />
+          <Parameter Name="userid" Value="" />
+          <Parameter Name="password" Value="" />
+        </Parameters>
+      </Connection>
+      <Query Type="SelectQuery" Name="vwCarService">
+        <Tables>
+          <Table Name="vwCarService" Meta="30|30|125|286" />
+        </Tables>
+        <Columns>
+          <Column Table="vwCarService" Name="csid" />
+          <Column Table="vwCarService" Name="csCusID" />
+          <Column Table="vwCarService" Name="cusFName" />
+          <Column Table="vwCarService" Name="cusCustomerID" />
+          <Column Table="vwCarService" Name="carFName" />
+          <Column Table="vwCarService" Name="stFName" />
+          <Column Table="vwCarService" Name="csRemarks" />
+          <Column Table="vwCarService" Name="csDateCreated" />
+          <Column Table="vwCarService" Name="AmountDue" />
+          <Column Table="vwCarService" Name="TotalPaid" />
+          <Column Table="vwCarService" Name="AmountLeft" />
+          <Column Table="vwCarService" Name="FullName" />
+        </Columns>
+      </Query>
+      <Query Type="SelectQuery" Name="vwCustomerPurchase">
+        <Tables>
+          <Table Name="vwCustomerPurchase" Meta="30|30|125|191" />
+        </Tables>
+        <Columns>
+          <Column Table="vwCustomerPurchase" Name="pdfname" />
+          <Column Table="vwCustomerPurchase" Name="cpQuantity" />
+        </Columns>
+      </Query>
+      <ResultSchema>
+        <DataSet Name="SQL Data Source 1">
+          <View Name="vwCarService">
+            <Field Name="csid" Type="Int32" />
+            <Field Name="csCusID" Type="Int32" />
+            <Field Name="cusFName" Type="String" />
+            <Field Name="cusCustomerID" Type="String" />
+            <Field Name="carFName" Type="String" />
+            <Field Name="stFName" Type="String" />
+            <Field Name="csRemarks" Type="String" />
+            <Field Name="csDateCreated" Type="DateTime" />
+            <Field Name="AmountDue" Type="Double" />
+            <Field Name="TotalPaid" Type="Double" />
+            <Field Name="AmountLeft" Type="Double" />
+            <Field Name="FullName" Type="String" />
+          </View>
+          <View Name="vwCustomerPurchase">
+            <Field Name="pdfname" Type="String" />
+            <Field Name="cpQuantity" Type="Int32" />
+          </View>
+        </DataSet>
+      </ResultSchema>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Chart ComponentName="chartDashboardItem1" Name="Daily Sales (ChartView)" DataSource="dashboardSqlDataSource1" DataMember="vwCarService">
+      <DataItems>
+        <Measure DataMember="AmountDue" Name="Total Sales" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" CurrencyCultureName="en-GH" />
+        </Measure>
+        <Dimension DataMember="csDateCreated" DateTimeGroupInterval="None" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Pie ComponentName="pieDashboardItem1" Name="Product Demands" DataSource="dashboardSqlDataSource1" DataMember="vwCustomerPurchase">
+      <DataItems>
+        <Dimension DataMember="pdfname" DefaultId="DataItem0" />
+        <Measure DataMember="cpQuantity" Name="Quantity Demanded" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Chart ComponentName="chartDashboardItem2" Name="Debts" DataSource="dashboardSqlDataSource1" DataMember="vwCarService">
+      <DataItems>
+        <Measure DataMember="AmountLeft" Name="Amount Due" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" CurrencyCultureName="en-GH" />
+        </Measure>
+        <Dimension DataMember="cusFName" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Card ComponentName="cardDashboardItem1" Name="Daily Sales (Card View)" DataSource="dashboardSqlDataSource1" DataMember="vwCarService">
+      <DataItems>
+        <Dimension DataMember="csDateCreated" DateTimeGroupInterval="None" DefaultId="DataItem0" />
+        <Measure DataMember="AmountDue" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" CurrencyCultureName="en-GH" />
+        </Measure>
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem0" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem1" />
+      </Card>
+    </Card>
+    <Chart ComponentName="chartDashboardItem3" Name="Regular Customers" DataSource="dashboardSqlDataSource1" DataMember="vwCarService">
+      <DataItems>
+        <Measure DataMember="csCusID" Name="Number Of Visits" SummaryType="Count" DefaultId="DataItem1" />
+        <Dimension DataMember="cusFName" DefaultId="DataItem2" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Customers">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="37.352674524025389">
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="50.09345794392523" />
+        <LayoutItem DashboardItem="cardDashboardItem1" Weight="49.90654205607477" />
+      </LayoutGroup>
+      <LayoutGroup Weight="62.647325475974611">
+        <LayoutItem DashboardItem="chartDashboardItem1" Weight="52.966714905933429" />
+        <LayoutGroup Orientation="Vertical" Weight="47.033285094066571">
+          <LayoutItem DashboardItem="chartDashboardItem3" Weight="49.90654205607477" />
+          <LayoutItem DashboardItem="chartDashboardItem2" Weight="50.09345794392523" />
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
